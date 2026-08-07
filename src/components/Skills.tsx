@@ -1,7 +1,7 @@
 export default function Skills() {
   const skillCategories = [
     {
-      title: "Programming",
+      title: "Programming Languages",
       skills: ["Python", "SQL", "Java", "JavaScript"],
     },
     {
@@ -23,7 +23,7 @@ export default function Skills() {
         "OpenCV",
         "TensorFlow",
         "Predictive Analytics",
-        "EDA",
+        "Exploratory Data Analysis (EDA)",
       ],
     },
     {
@@ -38,12 +38,13 @@ export default function Skills() {
       ],
     },
     {
-      title: "AI Creative Tools",
+      title: "Creative AI Tools",
       skills: [
         "Canva AI",
         "Runway ML",
         "ElevenLabs",
-        "Midjourney / DALL·E",
+        "Midjourney",
+        "DALL·E",
         "Stitch AI",
       ],
     },
@@ -71,27 +72,32 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="bg-[#050816] text-white py-24 px-6"
+      className="bg-black text-white py-20 px-6"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
 
-        <h2 className="text-5xl font-bold text-blue-500 text-center mb-4">
+        {/* Section Heading */}
+
+        <h2 className="text-4xl md:text-5xl font-bold text-blue-500 text-center mb-4">
           Skills
         </h2>
 
-        <p className="text-gray-400 text-center mb-16 text-lg">
-          Technologies and tools I use to build data-driven solutions.
+        <p className="text-gray-400 text-center max-w-3xl mx-auto mb-14 text-base md:text-lg">
+          Technologies, programming languages, AI tools, and platforms I use
+          to build intelligent, data-driven solutions.
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Skill Cards */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
           {skillCategories.map((category) => (
             <div
               key={category.title}
-              className="bg-[#111827] rounded-2xl p-7 border border-gray-800 hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 shadow-lg"
+              className="bg-[#111827] rounded-3xl p-7 border border-gray-800 shadow-lg hover:border-blue-500 transition-all duration-300"
             >
 
-              <h3 className="text-2xl font-semibold text-blue-400 mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-blue-400 mb-6">
                 {category.title}
               </h3>
 
@@ -100,7 +106,7 @@ export default function Skills() {
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="bg-blue-600 hover:bg-blue-500 transition px-4 py-2 rounded-full text-sm font-medium"
+                    className="bg-blue-600/90 hover:bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300"
                   >
                     {skill}
                   </span>

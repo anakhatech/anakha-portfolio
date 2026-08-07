@@ -1,59 +1,38 @@
+import { ArrowUp } from "lucide-react";
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="bg-black text-gray-400 border-t border-gray-800 py-10 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <footer className="bg-[#030712] border-t border-gray-800 py-8 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
 
-        {/* Left Section */}
+        {/* Left */}
+
         <div className="text-center md:text-left">
-          <h2 className="text-2xl font-bold text-white">
-            Anakha Vijay
-          </h2>
+          <h3 className="text-xl font-bold text-white">
+            Anakha <span className="text-xl font-bold text-white">Vijay</span>
+          </h3>
 
-          <p className="mt-2">
-            Data Analyst | AI & Machine Learning Enthusiast | Prompt Engineering
+          <p className="text-gray-400 mt-2 text-sm">
+            Data Analyst • AI Enthusiast • Prompt Engineering
           </p>
         </div>
 
-        {/* Middle Section */}
-        <div className="flex gap-6 text-sm">
+        {/* Center */}
 
-          <a href="#about" className="hover:text-blue-400 transition">
-            About
-          </a>
-
-          <a href="#experience" className="hover:text-blue-400 transition">
-            Experience
-          </a>
-
-          <a href="#skills" className="hover:text-blue-400 transition">
-            Skills
-          </a>
-
-          <a href="#certifications" className="hover:text-blue-400 transition">
-            Certifications
-          </a>
-
-          <a href="#contact" className="hover:text-blue-400 transition">
-            Contact
-          </a>
-
+        <div className="text-center text-gray-500 text-sm">
+          © {new Date().getFullYear()} Anakha Vijay.
+          <br />
+          Built with Next.js, React & Tailwind CSS.
         </div>
 
-        {/* Right Section */}
+        {/* Back to Top */}
 
-        <div className="text-center md:text-right">
-
-          <p>
-            © {currentYear} Anakha Vijay
-          </p>
-
-          <p className="text-sm mt-2">
-            Built with ❤️ using Next.js & Tailwind CSS
-          </p>
-
-        </div>
+        <a
+          href="#"
+          className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center"
+        >
+          <ArrowUp size={22} />
+        </a>
 
       </div>
     </footer>
