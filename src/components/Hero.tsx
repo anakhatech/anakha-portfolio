@@ -1,34 +1,12 @@
 "use client";
 
-import { useState } from "react";
-
 export default function Hero() {
-  const [showMessage, setShowMessage] = useState(false);
-
-  const handleResumeDownload = () => {
-    setShowMessage(true);
-
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 3000);
-  };
-
   return (
     <section
       id="home"
-      className="
-        relative
-        min-h-screen
-        flex
-        items-center
-        justify-center
-        px-4
-        pt-32
-        pb-16
-        sm:pt-32
-      "
+      className="min-h-screen flex items-center justify-center text-center px-6 pt-24"
     >
-      <div className="w-full max-w-5xl mx-auto text-center">
+      <div className="max-w-5xl mx-auto">
 
         {/* Main Heading */}
         <h1
@@ -111,27 +89,17 @@ export default function Hero() {
             flex
             flex-col
             sm:flex-row
-            items-stretch
-            sm:items-center
             justify-center
             gap-4
             w-full
-            max-w-md
-            mx-auto
+            sm:w-auto
             animate-[heroButtons_0.8s_ease-out_0.75s_forwards]
             opacity-0
           "
         >
-
-          {/* Contact Me */}
           <a
             href="#contact"
             className="
-              w-full
-              sm:w-auto
-              flex
-              items-center
-              justify-center
               bg-blue-600
               hover:bg-blue-700
               hover:-translate-y-1
@@ -139,26 +107,18 @@ export default function Hero() {
               transition-all
               duration-300
               px-8
-              py-4
+              py-3
               rounded-xl
               font-semibold
-              text-center
             "
           >
             Contact Me
           </a>
 
-          {/* Download Resume */}
           <a
             href="/Anakha_Vijay_Resume.pdf"
-            download="Anakha_Vijay_Resume.pdf"
-            onClick={handleResumeDownload}
+            download
             className="
-              w-full
-              sm:w-auto
-              flex
-              items-center
-              justify-center
               border
               border-white
               hover:bg-white
@@ -167,47 +127,16 @@ export default function Hero() {
               transition-all
               duration-300
               px-8
-              py-4
+              py-3
               rounded-xl
               font-semibold
-              text-center
-              cursor-pointer
             "
           >
             Download Resume
           </a>
-
         </div>
 
       </div>
-
-      {/* Resume Download Popup */}
-      {showMessage && (
-        <div
-          className="
-            fixed
-            bottom-6
-            left-1/2
-            -translate-x-1/2
-            z-[9999]
-            w-[calc(100%-32px)]
-            max-w-sm
-            bg-gray-900
-            border
-            border-blue-500/40
-            text-white
-            px-5
-            py-4
-            rounded-2xl
-            shadow-[0_0_30px_rgba(59,130,246,0.25)]
-            text-center
-            font-semibold
-          "
-        >
-          Resume downloaded!
-        </div>
-      )}
-
     </section>
   );
 }
