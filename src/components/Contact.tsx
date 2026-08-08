@@ -295,31 +295,6 @@ export default function Contact() {
                 Download Resume
               </a>
 
-            {/* Popup */}
-            {showMessage && (
-        <div
-            className="
-               fixed
-               bottom-6
-               left-1/2
-               -translate-x-1/2
-               z-[9999]
-               bg-gray-900
-               border
-               border-blue-500/40
-               text-white
-               px-6
-               py-4
-               rounded-xl
-               shadow-2xl
-               text-center
-               font-semibold
-            "
-          >
-          Resume downloaded!
-        </div>
-      )}
-
             </div>
 
           </div>
