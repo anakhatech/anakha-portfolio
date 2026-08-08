@@ -1,34 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function Hero() {
   const [showMessage, setShowMessage] = useState(false);
-  const isDownloading = useRef(false);
 
   const handleResumeDownload = () => {
-    // Prevent multiple clicks
-    if (isDownloading.current) return;
+    setShowMessage(true);
 
-    isDownloading.current = true;
-
-    // Start the download
-    const link = document.createElement("a");
-    link.href = "/Anakha_Vijay_Resume.pdf";
-    link.download = "Anakha_Vijay_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Show popup once
     setTimeout(() => {
-      setShowMessage(true);
-
-      setTimeout(() => {
-        setShowMessage(false);
-        isDownloading.current = false;
-      }, 3000);
-    }, 800);
+      setShowMessage(false);
+    }, 3000);
   };
 
   return (
@@ -43,6 +25,7 @@ export default function Hero() {
         px-4
         pt-32
         pb-16
+        sm:pt-32
       "
     >
       <div className="w-full max-w-5xl mx-auto text-center">
@@ -140,7 +123,7 @@ export default function Hero() {
           "
         >
 
-          {/* Contact Button */}
+          {/* Contact Me */}
           <a
             href="#contact"
             className="
@@ -166,10 +149,10 @@ export default function Hero() {
           </a>
 
           {/* Download Resume */}
-          <button
-            type="button"
+          <a
+            href="/Anakha_Vijay_Resume.pdf"
+            download="Anakha_Vijay_Resume.pdf"
             onClick={handleResumeDownload}
-            disabled={showMessage}
             className="
               w-full
               sm:w-auto
@@ -189,12 +172,10 @@ export default function Hero() {
               font-semibold
               text-center
               cursor-pointer
-              disabled:cursor-not-allowed
-              disabled:opacity-70
             "
           >
             Download Resume
-          </button>
+          </a>
 
         </div>
 
@@ -221,12 +202,12 @@ export default function Hero() {
             shadow-[0_0_30px_rgba(59,130,246,0.25)]
             text-center
             font-semibold
-            animate-[toastIn_0.3s_ease-out]
           "
         >
           Resume downloaded!
         </div>
       )}
+
     </section>
   );
 }
