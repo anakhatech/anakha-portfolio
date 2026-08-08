@@ -16,6 +16,7 @@ export default function Contact() {
   const [showMessage, setShowMessage] = useState(false);
 
   const sectionRef = useRef<HTMLElement | null>(null);
+  const isDownloading = useRef(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -40,11 +41,30 @@ export default function Contact() {
   }, []);
 
   const handleResumeDownload = () => {
-    setShowMessage(true);
+    // Prevent double clicks
+    if (isDownloading.current) return;
 
+    isDownloading.current = true;
+
+    // Create download link
+    const link = document.createElement("a");
+    link.href = "/Anakha_Vijay_Resume.pdf";
+    link.download = "Anakha_Vijay_Resume.pdf";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Show message after download starts
     setTimeout(() => {
-      setShowMessage(false);
-    }, 3000);
+      setShowMessage(true);
+
+      // Hide message after 3 seconds
+      setTimeout(() => {
+        setShowMessage(false);
+        isDownloading.current = false;
+      }, 3000);
+    }, 800);
   };
 
   return (
@@ -65,7 +85,7 @@ export default function Contact() {
         </span>
       </h2>
 
-      <p className="text-center text-gray-400 text-base md:text-lg max-w-2xl mx-auto mb-16">
+      <p className="text-center text-gray-400 text-base md:text-lg max-w-2xl mx-auto mb-16 px-4">
         I'm always open to discussing job opportunities,
         collaborations, and exciting data-driven projects.
       </p>
@@ -82,7 +102,8 @@ export default function Contact() {
             bg-white/5
             backdrop-blur-xl
             rounded-3xl
-            p-8
+            p-6
+            sm:p-8
             border border-white/10
             shadow-xl
             hover:bg-white/[0.08]
@@ -115,6 +136,7 @@ export default function Contact() {
                   justify-center
                   w-11
                   h-11
+                  shrink-0
                   rounded-xl
                   bg-blue-500/10
                   border border-blue-400/20
@@ -127,7 +149,7 @@ export default function Contact() {
                 <Mail size={21} />
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <p className="text-blue-400 font-semibold mb-1">
                   Email
                 </p>
@@ -138,6 +160,7 @@ export default function Contact() {
                     text-gray-300
                     hover:text-blue-400
                     transition
+                    break-all
                   "
                 >
                   anakhavijay766@gmail.com
@@ -155,6 +178,7 @@ export default function Contact() {
                   justify-center
                   w-11
                   h-11
+                  shrink-0
                   rounded-xl
                   bg-blue-500/10
                   border border-blue-400/20
@@ -195,6 +219,7 @@ export default function Contact() {
                   justify-center
                   w-11
                   h-11
+                  shrink-0
                   rounded-xl
                   bg-blue-500/10
                   border border-blue-400/20
@@ -229,7 +254,8 @@ export default function Contact() {
             bg-white/5
             backdrop-blur-xl
             rounded-3xl
-            p-8
+            p-6
+            sm:p-8
             border border-white/10
             shadow-xl
             hover:bg-white/[0.08]
@@ -262,6 +288,7 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="
+                w-full
                 flex
                 items-center
                 justify-center
@@ -289,6 +316,7 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="
+                w-full
                 flex
                 items-center
                 justify-center
@@ -314,11 +342,12 @@ export default function Contact() {
 
             {/* Resume */}
 
-            <a
-              href="/Anakha_Vijay_Resume.pdf"
-              download="Anakha_Vijay_Resume.pdf"
+            <button
+              type="button"
               onClick={handleResumeDownload}
+              disabled={showMessage}
               className="
+                w-full
                 flex
                 items-center
                 justify-center
@@ -337,11 +366,13 @@ export default function Contact() {
                 rounded-xl
                 font-semibold
                 hover:-translate-y-1
+                disabled:opacity-70
+                disabled:cursor-not-allowed
               "
             >
               <Download size={20} />
               Download Resume
-            </a>
+            </button>
 
           </div>
         </div>
@@ -355,21 +386,24 @@ export default function Contact() {
           className="
             fixed
             bottom-6
-            right-6
-            z-50
+            left-1/2
+            -translate-x-1/2
+            z-[9999]
+            w-[calc(100%-32px)]
+            max-w-sm
             bg-gray-900
             border
             border-blue-500/40
             text-white
-            px-6
+            px-5
             py-4
-            rounded-xl
-            shadow-2xl
+            rounded-2xl
+            shadow-[0_0_30px_rgba(59,130,246,0.25)]
+            text-center
+            font-semibold
           "
         >
-          <p className="font-semibold">
-            ✓ Anakha_Vijay_Resume.pdf downloaded!
-          </p>
+          ✓ Anakha_Vijay_Resume.pdf downloaded!
         </div>
       )}
 
