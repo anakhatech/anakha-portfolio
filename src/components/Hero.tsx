@@ -116,7 +116,7 @@ export default function Hero() {
           </a>
 
           <a
-            href="/resume.pdf"
+            href="/Anakha_Vijay_Resume.pdf"
             download
             className="
               border

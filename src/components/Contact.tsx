@@ -316,7 +316,7 @@ export default function Contact() {
               {/* Resume */}
 
               <a
-                href="/resume.pdf"
+                href="/Anakha_Vijay_Resume.pdf"
                 download
                 className="
                   flex
