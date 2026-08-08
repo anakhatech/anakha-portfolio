@@ -1,4 +1,11 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 export default function Skills() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   const skillCategories = [
     {
       title: "Programming Languages",
@@ -65,21 +72,51 @@ export default function Skills() {
         "VS Code",
         "Jupyter Notebook",
         "Google Colab",
+        "Databricks",
       ],
     },
   ];
 
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(section);
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="skills"
-      className="bg-black text-white py-20 px-6"
+      className={`transition-all duration-1000 ease-out ${
+        isVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-12"
+      }`}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-6 py-20">
 
         {/* Section Heading */}
 
-        <h2 className="text-4xl md:text-5xl font-bold text-blue-500 text-center mb-4">
-          Skills
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
+          <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent animate-[glow_2s_ease-in-out_infinite]">
+            Skills
+          </span>
         </h2>
 
         <p className="text-gray-400 text-center max-w-3xl mx-auto mb-14 text-base md:text-lg">
@@ -91,22 +128,65 @@ export default function Skills() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          {skillCategories.map((category) => (
+          {skillCategories.map((category, index) => (
             <div
               key={category.title}
-              className="bg-[#111827] rounded-3xl p-7 border border-gray-800 shadow-lg hover:border-blue-500 transition-all duration-300"
+              className={`
+                group
+                bg-white/5
+                backdrop-blur-xl
+                rounded-3xl
+                p-7
+                border border-white/10
+                shadow-xl
+                hover:bg-white/[0.08]
+                hover:border-blue-500/50
+                hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]
+                hover:-translate-y-1
+                transition-all
+                duration-700
+                ease-out
+                ${
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }
+              `}
+              style={{
+                transitionDelay: isVisible
+                  ? `${index * 60}ms`
+                  : "0ms",
+              }}
             >
 
-              <h3 className="text-xl md:text-2xl font-bold text-blue-400 mb-6">
+              {/* Category Title */}
+
+              <h3 className="text-xl md:text-2xl font-bold text-blue-400 mb-6 group-hover:text-blue-300 transition">
                 {category.title}
               </h3>
+
+              {/* Skill Badges */}
 
               <div className="flex flex-wrap gap-3">
 
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="bg-blue-600/90 hover:bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium transition duration-300"
+                    className="
+                      bg-blue-500/15
+                      border border-blue-400/20
+                      text-blue-100
+                      px-4
+                      py-2
+                      rounded-full
+                      text-sm
+                      font-medium
+                      hover:bg-blue-500/30
+                      hover:border-blue-400/50
+                      hover:text-white
+                      transition-all
+                      duration-300
+                    "
                   >
                     {skill}
                   </span>

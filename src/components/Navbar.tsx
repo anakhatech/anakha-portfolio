@@ -12,12 +12,14 @@ export default function Navbar() {
     { name: "Experience", href: "#experience" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
+    { name: "Certifications", href: "#certifications" },
     { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#050816]/80 backdrop-blur-md border-b border-gray-800">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-[#050816]/80 backdrop-blur-xl border-b border-white/10">
+      
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
         <a
@@ -45,7 +47,21 @@ export default function Navbar() {
             <li key={link.name}>
               <a
                 href={link.href}
-                className="relative hover:text-blue-400 transition duration-300 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-blue-400 after:transition-all after:duration-300 hover:after:w-full"
+                className="
+                  relative
+                  hover:text-blue-400
+                  transition
+                  duration-300
+                  after:absolute
+                  after:left-0
+                  after:-bottom-1
+                  after:w-0
+                  after:h-[2px]
+                  after:bg-blue-400
+                  after:transition-all
+                  after:duration-300
+                  hover:after:w-full
+                "
               >
                 {link.name}
               </a>
@@ -57,15 +73,18 @@ export default function Navbar() {
         <button
           className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
+
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#111827] border-t border-gray-700">
           <ul className="flex flex-col items-center py-6 space-y-6 text-gray-300 font-medium">
+
             {navLinks.map((link) => (
               <li key={link.name}>
                 <a
@@ -78,18 +97,30 @@ export default function Navbar() {
               </li>
             ))}
 
+            {/* Resume */}
             <li>
               <a
                 href="/resume.pdf"
                 download
-                className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-white transition"
+                onClick={() => setIsOpen(false)}
+                className="
+                  bg-blue-600
+                  hover:bg-blue-700
+                  px-5
+                  py-2
+                  rounded-lg
+                  text-white
+                  transition
+                "
               >
                 Resume
               </a>
             </li>
+
           </ul>
         </div>
       )}
+
     </nav>
   );
 }
