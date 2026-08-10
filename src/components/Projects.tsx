@@ -30,7 +30,8 @@ export default function Projects() {
         "Built a machine learning model to predict customer churn using classification algorithms and data visualization.",
       tech: ["Python", "Scikit-learn", "Pandas"],
       icon: "👥",
-      github: "#",
+      github:
+        "https://github.com/anakhatech/-Customer-Churn-Prediction",
     },
     {
       title: "Heart Disease Prediction",
@@ -54,7 +55,8 @@ export default function Projects() {
         "Analyzed Netflix content trends, genres, ratings, release years, and global distribution using Python and Power BI.",
       tech: ["Python", "Power BI", "Pandas"],
       icon: "🎬",
-      github: "https://github.com/anakhatech/Netflix-Content-Analysis",
+      github:
+        "https://github.com/anakhatech/Netflix-Content-Analysis",
     },
   ];
 
@@ -131,7 +133,9 @@ export default function Projects() {
               }
             `}
             style={{
-              transitionDelay: isVisible ? `${index * 90}ms` : "0ms",
+              transitionDelay: isVisible
+                ? `${index * 90}ms`
+                : "0ms",
             }}
           >
             {/* Project Preview */}
@@ -251,7 +255,9 @@ export default function Projects() {
 
                 <a
                   href={project.github}
-                  target={project.github !== "#" ? "_blank" : undefined}
+                  target={
+                    project.github !== "#" ? "_blank" : undefined
+                  }
                   rel={
                     project.github !== "#"
                       ? "noopener noreferrer"
