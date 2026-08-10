@@ -20,7 +20,7 @@ export default function Projects() {
       title: "Retail Sales Dashboard",
       description:
         "Designed an interactive Power BI dashboard to analyze sales trends, KPIs, revenue, profitability, customer segments, regions, and product performance.",
-      tech: ["Power BI", "SQL", "Excel"],
+      tech: ["Power BI", "Python", "SQL", "Excel"],
       icon: "📈",
       github: "https://github.com/anakhatech/Retail-Sales-Dashboard",
     },
