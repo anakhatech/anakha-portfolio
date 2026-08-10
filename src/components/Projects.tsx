@@ -14,13 +14,15 @@ export default function Projects() {
         "Developed an AI-powered traffic monitoring system using YOLO and OpenCV to detect vehicles and optimize traffic flow.",
       tech: ["Python", "YOLO", "OpenCV"],
       icon: "🚦",
+      github: "#",
     },
     {
       title: "Retail Sales Dashboard",
       description:
-        "Designed an interactive Power BI dashboard to analyze sales trends, KPIs, revenue, and customer insights.",
+        "Designed an interactive Power BI dashboard to analyze sales trends, KPIs, revenue, profitability, customer segments, regions, and product performance.",
       tech: ["Power BI", "SQL", "Excel"],
       icon: "📈",
+      github: "https://github.com/anakhatech/Retail-Sales-Dashboard",
     },
     {
       title: "Customer Churn Prediction",
@@ -28,6 +30,7 @@ export default function Projects() {
         "Built a machine learning model to predict customer churn using classification algorithms and data visualization.",
       tech: ["Python", "Scikit-learn", "Pandas"],
       icon: "👥",
+      github: "#",
     },
     {
       title: "Heart Disease Prediction",
@@ -35,6 +38,7 @@ export default function Projects() {
         "Developed a predictive healthcare model using machine learning algorithms to identify heart disease risks.",
       tech: ["Python", "Machine Learning", "Flask"],
       icon: "🫀",
+      github: "#",
     },
     {
       title: "Smart Water Management",
@@ -42,13 +46,15 @@ export default function Projects() {
         "Designed an IoT-enabled AI solution to monitor water usage and improve resource management.",
       tech: ["AI", "IoT", "Python"],
       icon: "💧",
+      github: "#",
     },
     {
       title: "Netflix User Behavior Analysis",
       description:
-        "Analyzed user viewing patterns and built interactive dashboards to derive business insights.",
+        "Analyzed Netflix content trends, genres, ratings, release years, and global distribution using Python and Power BI.",
       tech: ["Python", "Power BI", "Pandas"],
       icon: "🎬",
+      github: "https://github.com/anakhatech/Netflix-Content-Analysis",
     },
   ];
 
@@ -244,18 +250,10 @@ export default function Projects() {
                 {/* GitHub */}
 
                 <a
-                  href={
-                    project.title === "Retail Sales Dashboard"
-                      ? "https://github.com/anakhatech/Retail-Sales-Dashboard"
-                      : "#"
-                  }
-                  target={
-                    project.title === "Retail Sales Dashboard"
-                      ? "_blank"
-                      : undefined
-                  }
+                  href={project.github}
+                  target={project.github !== "#" ? "_blank" : undefined}
                   rel={
-                    project.title === "Retail Sales Dashboard"
+                    project.github !== "#"
                       ? "noopener noreferrer"
                       : undefined
                   }
