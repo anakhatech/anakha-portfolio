@@ -28,7 +28,7 @@ export default function Projects() {
       title: "Customer Churn Prediction",
       description:
         "Built a machine learning model to predict customer churn using classification algorithms and data visualization.",
-      tech: ["Python", "Scikit-learn", "Pandas"],
+      tech: ["Python", "Scikit-learn", "Pandas","Power BI"],
       icon: "👥",
       github:
         "https://github.com/anakhatech/-Customer-Churn-Prediction",
@@ -36,10 +36,11 @@ export default function Projects() {
     {
       title: "Heart Disease Prediction",
       description:
-        "Developed a predictive healthcare model using machine learning algorithms to identify heart disease risks.",
-      tech: ["Python", "Machine Learning", "Flask"],
+        "Developed a machine learning model to predict the risk of heart disease using patient health features and classification algorithms.",
+      tech: ["Python", "Machine Learning", "Scikit-learn"],
       icon: "🫀",
-      github: "#",
+      github:
+        "https://github.com/anakhatech/Heart-Disease-Prediction",
     },
     {
       title: "Smart Water Management",
