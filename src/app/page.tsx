@@ -7,15 +7,15 @@ import Projects from "../components/Projects";
 import Certifications from "../components/Certifications";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import AnakhaAI from "../components/AnakhaAI";
 
 export default function Home() {
   return (
     <main className="relative overflow-hidden bg-[#050816] text-white">
-
+      
       {/* Background Glow Effects */}
-
       <div className="pointer-events-none fixed inset-0 -z-10">
-
+        
         {/* Top Blue Glow */}
         <div
           className="
@@ -57,7 +57,6 @@ export default function Home() {
             blur-[120px]
           "
         />
-
       </div>
 
       {/* Navigation */}
@@ -74,6 +73,9 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* AI Assistant */}
+      <AnakhaAI />
 
     </main>
   );
