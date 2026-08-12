@@ -28,7 +28,7 @@ export default function Projects() {
       title: "Customer Churn Prediction",
       description:
         "Built a machine learning model to predict customer churn using classification algorithms and data visualization.",
-      tech: ["Python", "Scikit-learn", "Pandas","Power BI"],
+      tech: ["Python", "Scikit-learn", "Pandas", "Power BI"],
       icon: "👥",
       github:
         "https://github.com/anakhatech/-Customer-Churn-Prediction",
@@ -45,10 +45,11 @@ export default function Projects() {
     {
       title: "Smart Water Management",
       description:
-        "Designed an IoT-enabled AI solution to monitor water usage and improve resource management.",
-      tech: ["AI", "IoT", "Python"],
+        "Designed an AI-powered smart water management system to monitor pipeline sensor data and predict potential water leakage.",
+      tech: ["AI", "Machine Learning", "Python", "Streamlit"],
       icon: "💧",
-      github: "#",
+      github:
+        "https://github.com/anakhatech/Smart-Water-Management-System-AI",
     },
     {
       title: "Netflix User Behavior Analysis",
@@ -118,7 +119,8 @@ export default function Projects() {
               backdrop-blur-xl
               rounded-3xl
               overflow-hidden
-              border border-white/10
+              border
+              border-white/10
               shadow-xl
               hover:bg-white/[0.08]
               hover:border-blue-500/50
@@ -229,7 +231,8 @@ export default function Projects() {
                     key={tech}
                     className="
                       bg-blue-500/10
-                      border border-blue-400/20
+                      border
+                      border-blue-400/20
                       text-blue-300
                       px-3
                       py-1.5
@@ -257,7 +260,9 @@ export default function Projects() {
                 <a
                   href={project.github}
                   target={
-                    project.github !== "#" ? "_blank" : undefined
+                    project.github !== "#"
+                      ? "_blank"
+                      : undefined
                   }
                   rel={
                     project.github !== "#"
