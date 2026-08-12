@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💧 Smart Water Management Using AI
 
-## Getting Started
+An AI-powered Smart Water Management project that analyzes water consumption patterns and predicts water wastage using Machine Learning.
 
-First, run the development server:
+## 📌 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Water is an important resource, and efficient water management can help reduce unnecessary wastage. This project uses data analysis and Machine Learning to study factors such as water usage, household size, and temperature to predict water wastage.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Objectives
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Analyze water consumption patterns
+- Identify factors affecting water usage
+- Visualize water usage and wastage trends
+- Build a Machine Learning model to predict water wastage
+- Support smarter and more efficient water management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📊 Dataset Features
 
-## Learn More
+The dataset contains the following features:
 
-To learn more about Next.js, take a look at the following resources:
+- **Water Usage Liters** – Amount of water consumed
+- **Household Size** – Number of people in the household
+- **Temperature** – Environmental temperature
+- **Water Wastage** – Amount of water wasted
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- Scikit-learn
+- Google Colab
 
-## Deploy on Vercel
+## 🤖 Machine Learning
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project uses Machine Learning to predict water wastage based on factors such as:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Water usage
+- Household size
+- Temperature
+
+## 📈 Project Workflow
+
+1. Import required libraries
+2. Create and load the dataset
+3. Explore and analyze the data
+4. Visualize water usage patterns
+5. Prepare the data for Machine Learning
+6. Train the prediction model
+7. Evaluate model performance
+8. Predict water wastage
+
+## 🚀 Future Improvements
+
+- Use real-time IoT sensor data
+- Add water leakage detection
+- Develop a web-based dashboard
+- Provide alerts for excessive water usage
+- Integrate the system with smart water meters
+
+  ## 🌐 Live Portfolio
+  Check out my portfolio to explore more of my projects:
+  https://anakha-portfolio-five.vercel.app/
+
+## 👩‍💻 Author
+
+**Anakha Vijay**
+
+Data Analyst | AI Enthusiast | Prompt Engineer
