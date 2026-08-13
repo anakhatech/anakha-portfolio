@@ -1,431 +1,419 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState, KeyboardEvent } from "react";
 import {
   MessageCircle,
   X,
   Send,
-  Briefcase,
-  Code2,
-  FolderKanban,
-  GraduationCap,
-  Award,
-  Mail,
-  Sparkles,
+  Loader2,
 } from "lucide-react";
 
 type ChatMessage = {
-  role: "bot" | "user";
-  text: string;
+  role: "user" | "assistant";
+  content: string;
 };
-
-const quickQuestions = [
-  {
-    label: "Her Experience",
-    icon: Briefcase,
-    question: "What experience does Anakha have?",
-  },
-  {
-    label: "Her Skills",
-    icon: Code2,
-    question: "What are Anakha's skills?",
-  },
-  {
-    label: "Her Projects",
-    icon: FolderKanban,
-    question: "Tell me about Anakha's projects",
-  },
-  {
-    label: "Education",
-    icon: GraduationCap,
-    question: "Tell me about Anakha's education",
-  },
-  {
-    label: "Certifications",
-    icon: Award,
-    question: "What certifications does Anakha have?",
-  },
-  {
-    label: "Contact Info",
-    icon: Mail,
-    question: "How can I contact Anakha?",
-  },
-];
 
 export default function AnakhaAI() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      role: "bot",
-      text: `Hi there! I'm Anakha AI.
-
-Ask me anything about Anakha's skills, projects, experience, education, or certifications! ✨`,
+      role: "assistant",
+      content:
+        "👋 Hi! I'm Anakha AI! I can help you learn about Anakha's skills, experience, projects, education, certifications, and professional background. What would you like to know? ✨",
     },
   ]);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const getResponse = (question: string): string => {
+    const q = question.toLowerCase().trim();
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [messages, isTyping]);
-
-  const getAnswer = (question: string) => {
-    const text = question.toLowerCase();
-
+    // GREETINGS
     if (
-      text.includes("skill") ||
-      text.includes("python") ||
-      text.includes("sql") ||
-      text.includes("power bi") ||
-      text.includes("technology")
+      /^(hi|hello|hey|hii|hiii|hello there|hey there)[!., ]*$/.test(q)
     ) {
-      return `💻 Anakha's key skills include:
-
-• Python
-• SQL
-• Power BI
-• Excel
-• Data Analysis
-• Data Engineering
-• Machine Learning
-• Artificial Intelligence
-• OpenCV
-• YOLO
-• React and Next.js
-
-She enjoys working with data and building practical AI projects! ✨`;
+      return "👋 Hi! Nice to meet you! I'm Anakha AI. You can ask me anything about Anakha's professional background, skills, projects, work experience, education, or certifications. ✨";
     }
 
     if (
-      text.includes("project") ||
-      text.includes("built") ||
-      text.includes("portfolio")
+      q.includes("how are you") ||
+      q.includes("how r u")
     ) {
-      return `🚀 Anakha has worked on projects including:
-
-🚦 Urban Traffic Optimization
-Uses YOLO and OpenCV for vehicle detection and traffic analysis.
-
-💧 Smart Water Management
-An AI and IoT-based solution for smarter water resource management.
-
-📊 Retail Sales Dashboard
-Analyzes sales, revenue, KPIs, products, and regions.
-
-👥 Customer Churn Prediction
-Uses machine learning to predict customers who may leave.
-
-❤️ Heart Disease Prediction
-A machine learning model for heart disease risk prediction.
-
-🎬 Netflix User Behavior Analysis
-Explores content trends, genres, ratings, and release years.`;
+      return "😊 I'm doing great and ready to help! What would you like to know about Anakha?";
     }
 
+    // WHO ARE YOU
     if (
-      text.includes("experience") ||
-      text.includes("job") ||
-      text.includes("career") ||
-      text.includes("work")
+      q.includes("who are you") ||
+      q.includes("what are you")
     ) {
-      return `💼 Anakha has experience as a:
-
-• Data Engineer
-• AI Teacher
-• Research Assistant
-
-Her experience combines Data Engineering, Artificial Intelligence, teaching, research, and technology projects. 🚀`;
+      return "🤖 I'm Anakha AI, a portfolio assistant designed to help visitors learn more about Anakha's professional background, skills, experience, and projects.";
     }
 
+    // WHO IS ANAKHA
     if (
-      text.includes("education") ||
-      text.includes("study") ||
-      text.includes("degree") ||
-      text.includes("college")
+      q.includes("who is anakha") ||
+      q.includes("tell me about anakha") ||
+      q.includes("who's anakha")
     ) {
-      return `🎓 Anakha has a Bachelor of Technology (B.Tech) background in Information Technology.
-
-Her areas of interest include:
-
-• Artificial Intelligence
-• Machine Learning
-• Data Engineering
-• Data Analytics
-• Data Science`;
+      return "👩‍💻 Anakha Vijay is a Data and AI professional with experience in Data Engineering, AI education, and research. Her skills include Python, SQL, Power BI, machine learning, data analysis, computer vision, and dashboard development.";
     }
 
+    // THANK YOU
     if (
-      text.includes("certificate") ||
-      text.includes("certification")
+      q.includes("thank you") ||
+      q.includes("thanks") ||
+      q === "thank" ||
+      q.includes("thx")
     ) {
-      return `🏆 Anakha has participated in workshops and learning experiences related to:
-
-• Artificial Intelligence
-• R Programming
-• Computer Vision
-• AI in Education
-• Data and Technology
-
-You can explore more in the Certifications section of this portfolio! ✨`;
+      return "You're very welcome! 😊 Feel free to ask me anything else about Anakha's background or projects.";
     }
 
+    // GOODBYE
     if (
-      text.includes("contact") ||
-      text.includes("email") ||
-      text.includes("reach") ||
-      text.includes("hire")
+      q.includes("bye") ||
+      q.includes("goodbye") ||
+      q.includes("see you")
     ) {
-      return `📬 You can contact Anakha through the Contact section of this portfolio.
-
-Feel free to connect for opportunities, collaborations, or project discussions! ✨`;
+      return "👋 Goodbye! Thanks for visiting Anakha's portfolio. Have a wonderful day! ✨";
     }
 
+    // CONTACT / HIRE
     if (
-      text.includes("hello") ||
-      text.includes("hi")
+      q.includes("contact") ||
+      q.includes("email") ||
+      q.includes("reach her") ||
+      q.includes("hire") ||
+      q.includes("connect with her") ||
+      q.includes("linkedin")
     ) {
-      return `👋 Hello! Nice to meet you!
-
-I'm here to help you explore Anakha's portfolio.
-
-Ask me about:
-
-💻 Skills
-🚀 Projects
-💼 Experience
-🎓 Education
-🏆 Certifications
-📬 Contact information`;
+      return "📩 You can contact Anakha through the Contact section of this portfolio. You can also connect with her through her LinkedIn and GitHub profiles.";
     }
 
-    return `✨ I can help you learn about Anakha's portfolio!
+    // PYTHON
+    if (
+      q.includes("python") ||
+      q.includes("coding language")
+    ) {
+      return "🐍 Yes! Anakha has hands-on experience with Python. She has used it for data analysis, machine learning, predictive modeling, computer vision, automation, and multiple portfolio projects.";
+    }
 
-Try asking:
+    // SQL
+    if (
+      q.includes("sql") ||
+      q.includes("database") ||
+      q.includes("databases")
+    ) {
+      return "🗄️ Yes! Anakha has experience with SQL and database-related work, including data extraction, querying, analysis, data processing, and reporting workflows.";
+    }
 
-• What are her skills?
-• Tell me about her projects
-• What experience does she have?
-• What is her education?
-• What certifications does she have?
+    // POWER BI
+    if (
+      q.includes("power bi") ||
+      q.includes("business intelligence") ||
+      q.includes("dashboard") ||
+      q.includes("dashboards")
+    ) {
+      return "📊 Anakha has experience creating interactive dashboards and data visualizations using Power BI. Her portfolio includes projects such as the Retail Sales Dashboard, Customer Churn Prediction, and Netflix User Behavior Analysis.";
+    }
 
-Or click one of the buttons above! 💙`;
+    // EXCEL
+    if (
+      q.includes("excel") ||
+      q.includes("spreadsheet")
+    ) {
+      return "📈 Yes! Anakha has experience using Excel for data analysis, reporting, structured data handling, and KPI-related analysis.";
+    }
+
+    // TABLEAU
+    if (q.includes("tableau")) {
+      return "📊 Anakha is familiar with Tableau as part of her data visualization and business intelligence skill set.";
+    }
+
+    // GIT / GITHUB
+    if (
+      q.includes("github") ||
+      q.includes("git") ||
+      q.includes("repository") ||
+      q.includes("repositories")
+    ) {
+      return "💻 You can explore Anakha's project repositories through her GitHub profile: github.com/anakhatech";
+    }
+
+    // DATA ANALYST
+    if (
+      q.includes("data analyst") ||
+      q.includes("data analytics") ||
+      q.includes("data analysis") ||
+      q.includes("analyst") ||
+      q.includes("data related")
+    ) {
+      return "📊 Anakha's profile is strongly aligned with Data Analytics. Her skills include Python, SQL, Power BI, Excel, data cleaning, data transformation, exploratory data analysis, KPI development, dashboard creation, and data visualization.";
+    }
+
+    // DATA ENGINEERING
+    if (
+      q.includes("data engineer") ||
+      q.includes("data engineering") ||
+      q.includes("data pipeline") ||
+      q.includes("pipelines") ||
+      q.includes("etl")
+    ) {
+      return "⚙️ Anakha has professional experience as a Data Engineer. Her work involved data pipelines, workflow automation, SQL, Python, data processing, data quality, and reporting.";
+    }
+
+    // AI / ML
+    if (
+      q.includes("machine learning") ||
+      q.includes("artificial intelligence") ||
+      q.includes(" ai") ||
+      q.startsWith("ai ") ||
+      q.includes("ml project") ||
+      q.includes("does she know ml")
+    ) {
+      return "🤖 Anakha has hands-on experience with AI and Machine Learning. Her work includes Customer Churn Prediction, Heart Disease Prediction, Smart Water Management, and Urban Traffic Optimization using technologies such as Python, Scikit-learn, YOLO, and OpenCV.";
+    }
+
+    // YOLO / OPENCV / COMPUTER VISION
+    if (
+      q.includes("yolo") ||
+      q.includes("opencv") ||
+      q.includes("computer vision")
+    ) {
+      return "👁️ Anakha has worked with YOLO and OpenCV for computer vision. These technologies were used in her Urban Traffic Optimization project to detect and analyze vehicles.";
+    }
+
+    // URBAN TRAFFIC
+    if (
+      q.includes("urban traffic") ||
+      q.includes("traffic optimization") ||
+      q.includes("traffic project")
+    ) {
+      return "🚦 Urban Traffic Optimization uses Python, YOLO, and OpenCV. It is an AI-powered traffic monitoring project that detects vehicles and analyzes traffic flow to support traffic optimization.";
+    }
+
+    // RETAIL SALES
+    if (
+      q.includes("retail sales") ||
+      q.includes("sales dashboard") ||
+      q.includes("sales project")
+    ) {
+      return "📈 The Retail Sales Dashboard was developed using Power BI, Python, SQL, and Excel. It analyzes sales trends, KPIs, revenue, profitability, customer segments, regions, and product performance.";
+    }
+
+    // CHURN
+    if (
+      q.includes("churn") ||
+      q.includes("customer retention") ||
+      q.includes("customer churn")
+    ) {
+      return "👥 The Customer Churn Prediction project uses Python, Scikit-learn, Pandas, and Power BI. It uses machine learning classification techniques to predict potential customer churn and identify patterns in customer behavior.";
+    }
+
+    // HEART DISEASE
+    if (
+      q.includes("heart disease") ||
+      q.includes("heart project") ||
+      q.includes("healthcare project")
+    ) {
+      return "🫀 The Heart Disease Prediction project uses Python, Machine Learning, and Scikit-learn. It analyzes patient health features and uses classification algorithms to predict the potential risk of heart disease.";
+    }
+
+    // SMART WATER
+    if (
+      q.includes("smart water") ||
+      q.includes("water management") ||
+      q.includes("water project") ||
+      q.includes("water leakage") ||
+      q.includes("leakage")
+    ) {
+      return "💧 Smart Water Management is an AI-powered project built using AI, Machine Learning, Python, and Streamlit. It is designed to monitor pipeline sensor data and predict potential water leakage.";
+    }
+
+    // NETFLIX
+    if (
+      q.includes("netflix") ||
+      q.includes("user behavior")
+    ) {
+      return "🎬 Netflix User Behavior Analysis uses Python, Power BI, and Pandas. The project analyzes Netflix content trends, genres, ratings, release years, and global distribution.";
+    }
+
+    // PROJECTS GENERAL
+    if (
+      q.includes("projects") ||
+      q.includes("project") ||
+      q.includes("what has she built") ||
+      q.includes("what did she build") ||
+      q.includes("show me her work")
+    ) {
+      return "🚀 Anakha has completed 6 major portfolio projects:\n\n🚦 Urban Traffic Optimization\n📈 Retail Sales Dashboard\n👥 Customer Churn Prediction\n🫀 Heart Disease Prediction\n💧 Smart Water Management\n🎬 Netflix User Behavior Analysis\n\nYou can ask me about any of these individually!";
+    }
+
+    // SKILLS GENERAL
+    if (
+      q.includes("skills") ||
+      q.includes("skill set") ||
+      q.includes("technologies") ||
+      q.includes("technology") ||
+      q.includes("tools") ||
+      q.includes("what can she do") ||
+      q.includes("what does she know")
+    ) {
+      return "💻 Anakha's key technical skills include:\n\n• Python\n• SQL\n• Power BI\n• Tableau\n• Excel\n• Pandas\n• Scikit-learn\n• Machine Learning\n• YOLO\n• OpenCV\n• Data Cleaning & Transformation\n• Exploratory Data Analysis\n• Dashboard Development\n• Data Visualization\n• Git & GitHub";
+    }
+
+    // EXPERIENCE
+    if (
+      q.includes("experience") ||
+      q.includes("work experience") ||
+      q.includes("where has she worked") ||
+      q.includes("where did she work") ||
+      q.includes("career") ||
+      q.includes("job history")
+    ) {
+      return "💼 Anakha has experience in three major roles:\n\n• Data Engineer at Sapaad Pvt Ltd\n• AI / Computer Science Educator at Bhavan's Newsprint Vidyalaya\n• Research Assistant at Toc H Institute of Science and Technology\n\nHer work includes data pipelines, Python, SQL, Power BI, AI education, research, data analysis, and machine learning.";
+    }
+
+    // EDUCATION
+    if (
+      q.includes("education") ||
+      q.includes("degree") ||
+      q.includes("qualification") ||
+      q.includes("college") ||
+      q.includes("what did she study")
+    ) {
+      return "🎓 Anakha completed a Bachelor of Technology (B.Tech) in Information Technology from Toc H Institute of Science and Technology.";
+    }
+
+    // CERTIFICATIONS
+    if (
+      q.includes("certification") ||
+      q.includes("certificate") ||
+      q.includes("certified")
+    ) {
+      return "🏆 Anakha's certifications include AI Tools & Applications and Foundation in Data Structures. She also holds an IELTS Overall Band Score of 5.5.";
+    }
+
+    // RESUME
+    if (
+      q.includes("resume") ||
+      q.includes("cv")
+    ) {
+      return "📄 You can find Anakha's professional background, experience, technical skills, and projects through the resume available on this portfolio.";
+    }
+
+    // PORTFOLIO
+    if (
+      q.includes("portfolio") ||
+      q.includes("website")
+    ) {
+      return "✨ You're currently exploring Anakha's portfolio! You can browse her About section, Experience, Skills, Projects, Certifications, and Contact information.";
+    }
+
+    // DEFAULT
+    return "🤔 I may not have understood that completely, but I'm here to help! You can ask me about Anakha's skills, work experience, Data Engineering, AI, Machine Learning, Python, SQL, Power BI, education, certifications, or any of her 6 portfolio projects. 😊";
   };
 
-  const sendMessage = (customMessage?: string) => {
-    const text = (customMessage || message).trim();
+  const sendMessage = (text?: string) => {
+    const userMessage = (text || message).trim();
 
-    if (!text || isTyping) return;
+    if (!userMessage || isLoading) return;
 
     setMessages((prev) => [
       ...prev,
       {
         role: "user",
-        text,
+        content: userMessage,
       },
     ]);
 
     setMessage("");
-    setIsTyping(true);
+    setIsLoading(true);
 
     setTimeout(() => {
-      const answer = getAnswer(text);
+      const reply = getResponse(userMessage);
 
       setMessages((prev) => [
         ...prev,
         {
-          role: "bot",
-          text: answer,
+          role: "assistant",
+          content: reply,
         },
       ]);
 
-      setIsTyping(false);
-    }, 700);
+      setIsLoading(false);
+    }, 500);
   };
 
   const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLInputElement>
+    e: KeyboardEvent<HTMLInputElement>
   ) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
+    if (e.key === "Enter") {
+      e.preventDefault();
       sendMessage();
     }
   };
 
-  return (
-    <div className="fixed bottom-5 right-5 z-50">
+  const quickQuestions = [
+    "What are her skills?",
+    "Tell me about her projects",
+    "What experience does she have?",
+  ];
 
+  return (
+    <div className="fixed bottom-6 right-6 z-50">
+
+      {/* Chat Window */}
       {isOpen && (
         <div
           className="
-            relative
             mb-4
-            w-[360px]
-            max-w-[calc(100vw-24px)]
+            w-[350px]
+            max-w-[calc(100vw-32px)]
             overflow-hidden
-            rounded-[28px]
+            rounded-3xl
             border
-            border-blue-400/40
-            bg-[#0c1630]/95
-            shadow-[0_0_45px_rgba(59,130,246,0.35)]
+            border-blue-400/30
+            bg-[#111827]/95
+            shadow-[0_0_40px_rgba(59,130,246,0.25)]
             backdrop-blur-xl
           "
         >
 
-          {/* Sparkles */}
-
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-
-            <div className="absolute left-4 top-20 animate-pulse text-cyan-300">
-              ✨
-            </div>
-
-            <div className="absolute right-5 top-28 animate-bounce text-purple-300">
-              ✦
-            </div>
-
-            <div className="absolute bottom-24 left-5 animate-pulse text-blue-300">
-              ✧
-            </div>
-
-            <div className="absolute bottom-40 right-5 animate-pulse text-purple-300">
-              ✨
-            </div>
-
-          </div>
-
           {/* Header */}
-
-          <div
-            className="
-              relative
-              flex
-              items-center
-              justify-between
-              border-b
-              border-white/10
-              bg-gradient-to-r
-              from-[#172a55]
-              to-[#202c58]
-              p-4
-            "
-          >
+          <div className="flex items-center justify-between border-b border-white/10 bg-blue-600/20 p-4">
 
             <div className="flex items-center gap-3">
 
-              {/* AI Profile */}
-
-              <div className="relative">
-
-                <div
-                  className="
-                    h-12
-                    w-12
-                    animate-bounce
-                    overflow-hidden
-                    rounded-full
-                    border-2
-                    border-purple-400
-                    shadow-[0_0_20px_rgba(168,85,247,0.7)]
-                  "
-                >
-                  <img
-                    src="/hero-character.png"
-                    alt="Anakha AI"
-                    className="
-                      h-full
-                      w-full
-                      object-cover
-                    "
-                  />
-                </div>
-
-                <span
-                  className="
-                    absolute
-                    -left-2
-                    -top-2
-                    animate-pulse
-                    text-sm
-                    text-yellow-200
-                  "
-                >
-                  ✨
-                </span>
-
-                <span
-                  className="
-                    absolute
-                    -right-2
-                    top-0
-                    animate-ping
-                    text-xs
-                    text-purple-200
-                  "
-                >
-                  ✦
-                </span>
-
-                <span
-                  className="
-                    absolute
-                    bottom-0
-                    right-0
-                    flex
-                    h-3
-                    w-3
-                  "
-                >
-                  <span
-                    className="
-                      absolute
-                      inline-flex
-                      h-full
-                      w-full
-                      animate-ping
-                      rounded-full
-                      bg-green-400
-                      opacity-75
-                    "
-                  />
-
-                  <span
-                    className="
-                      relative
-                      inline-flex
-                      h-3
-                      w-3
-                      rounded-full
-                      border-2
-                      border-[#172a55]
-                      bg-green-400
-                    "
-                  />
-                </span>
-
+              {/* KEEP YOUR EXISTING CUTE CHARACTER HERE */}
+              <div className="
+                flex
+                h-11
+                w-11
+                items-center
+                justify-center
+                overflow-hidden
+                rounded-full
+                bg-gradient-to-br
+                from-blue-400
+                to-purple-500
+              ">
+                <img
+                  src="/hero-character.png"
+                  alt="Anakha AI"
+                  className="h-full w-full object-cover"
+                />
               </div>
 
               <div>
-
-                <h3 className="flex items-center gap-1 font-bold text-white">
-
-                  Anakha AI
-
-                  <Sparkles
-                    size={16}
-                    className="animate-pulse text-yellow-300"
-                  />
-
+                <h3 className="font-bold text-white">
+                  Anakha AI ✨
                 </h3>
 
                 <p className="text-xs text-green-400">
                   ● Online
                 </p>
-
               </div>
 
             </div>
@@ -438,7 +426,6 @@ Or click one of the buttons above! 💙`;
                 p-2
                 text-gray-300
                 transition
-                hover:rotate-90
                 hover:bg-white/10
                 hover:text-white
               "
@@ -449,319 +436,261 @@ Or click one of the buttons above! 💙`;
           </div>
 
           {/* Messages */}
+          <div className="h-[380px] space-y-4 overflow-y-auto p-4">
 
-          <div className="relative h-[385px] space-y-4 overflow-y-auto p-4">
-
-            {messages.map((item, index) => (
+            {messages.map((chat, index) => (
 
               <div
                 key={index}
-                className={`flex items-start gap-2 ${
-                  item.role === "user"
-                    ? "flex-row-reverse"
+                className={`flex items-start gap-3 ${
+                  chat.role === "user"
+                    ? "justify-end"
                     : ""
                 }`}
               >
 
-                {item.role === "bot" && (
-
-                  <div
-                    className="
-                      h-9
-                      w-9
-                      shrink-0
-                      overflow-hidden
-                      rounded-full
-                      border
-                      border-purple-400/60
-                      shadow-[0_0_12px_rgba(139,92,246,0.5)]
-                    "
-                  >
-
+                {chat.role === "assistant" && (
+                  <div className="
+                    flex
+                    h-9
+                    w-9
+                    shrink-0
+                    items-center
+                    justify-center
+                    overflow-hidden
+                    rounded-full
+                    bg-blue-500
+                  ">
                     <img
                       src="/hero-character.png"
                       alt="Anakha AI"
                       className="h-full w-full object-cover"
                     />
-
                   </div>
-
                 )}
 
                 <div
-                  className={`max-w-[78%] whitespace-pre-line rounded-2xl p-3 text-sm leading-relaxed ${
-                    item.role === "user"
-                      ? "rounded-tr-sm bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                      : "rounded-tl-sm border border-white/5 bg-white/10 text-gray-200"
-                  }`}
+                  className={`
+                    max-w-[80%]
+                    whitespace-pre-line
+                    rounded-2xl
+                    p-3
+                    text-sm
+                    leading-relaxed
+                    ${
+                      chat.role === "user"
+                        ? "rounded-tr-none bg-blue-600 text-white"
+                        : "rounded-tl-none bg-white/10 text-gray-200"
+                    }
+                  `}
                 >
-                  {item.text}
+                  {chat.content}
                 </div>
 
               </div>
 
             ))}
 
-            {/* Typing animation */}
+            {isLoading && (
+              <div className="flex items-center gap-3">
 
-            {isTyping && (
-
-              <div className="flex items-center gap-2">
-
-                <div className="h-9 w-9 overflow-hidden rounded-full border border-purple-400/60">
-
+                <div className="
+                  flex
+                  h-9
+                  w-9
+                  shrink-0
+                  items-center
+                  justify-center
+                  overflow-hidden
+                  rounded-full
+                  bg-blue-500
+                ">
                   <img
                     src="/hero-character.png"
                     alt="Anakha AI"
                     className="h-full w-full object-cover"
                   />
-
                 </div>
 
-                <div className="flex gap-1 rounded-2xl bg-white/10 px-4 py-3">
+                <div className="
+                  flex
+                  items-center
+                  gap-2
+                  rounded-2xl
+                  rounded-tl-none
+                  bg-white/10
+                  p-3
+                  text-sm
+                  text-gray-300
+                ">
+                  <Loader2
+                    size={16}
+                    className="animate-spin"
+                  />
 
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-300" />
-
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-purple-300 [animation-delay:150ms]" />
-
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300 [animation-delay:300ms]" />
-
+                  Thinking...
                 </div>
 
               </div>
-
             )}
 
-            {/* Quick Questions */}
+            {messages.length === 1 && !isLoading && (
+              <div className="space-y-2 pt-2">
 
-            {messages.length === 1 && (
+                <p className="text-xs text-gray-500">
+                  Try asking:
+                </p>
 
-              <div className="grid grid-cols-2 gap-2 pt-1">
-
-                {quickQuestions.map((question) => {
-
-                  const Icon = question.icon;
-
-                  return (
-
-                    <button
-                      key={question.label}
-                      type="button"
-                      onClick={() => sendMessage(question.question)}
-                      className="
-                        group
-                        flex
-                        items-center
-                        gap-2
-                        rounded-xl
-                        border
-                        border-blue-400/30
-                        bg-blue-500/5
-                        px-3
-                        py-2.5
-                        text-left
-                        text-xs
-                        text-blue-200
-                        transition-all
-                        duration-300
-                        hover:-translate-y-0.5
-                        hover:border-purple-400
-                        hover:bg-purple-500/15
-                        hover:shadow-[0_0_18px_rgba(139,92,246,0.25)]
-                      "
-                    >
-
-                      <Icon
-                        size={17}
-                        className="
-                          text-cyan-300
-                          transition
-                          group-hover:scale-110
-                          group-hover:rotate-6
-                        "
-                      />
-
-                      {question.label}
-
-                    </button>
-
-                  );
-                })}
+                {quickQuestions.map((question) => (
+                  <button
+                    key={question}
+                    type="button"
+                    onClick={() => sendMessage(question)}
+                    className="
+                      block
+                      w-full
+                      rounded-xl
+                      border
+                      border-blue-400/20
+                      bg-blue-500/10
+                      px-3
+                      py-2
+                      text-left
+                      text-sm
+                      text-blue-300
+                      transition
+                      hover:bg-blue-500/20
+                      hover:border-blue-400/50
+                    "
+                  >
+                    {question}
+                  </button>
+                ))}
 
               </div>
-
             )}
-
-            <div ref={messagesEndRef} />
 
           </div>
 
           {/* Input */}
+          <div className="
+            flex
+            gap-2
+            border-t
+            border-white/10
+            p-3
+          ">
 
-          <div
-            className="
-              relative
-              border-t
-              border-white/10
-              bg-[#101a32]/90
-              p-3
-            "
-          >
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask Anakha AI..."
+              disabled={isLoading}
+              className="
+                flex-1
+                rounded-xl
+                border
+                border-white/10
+                bg-white/5
+                px-4
+                py-3
+                text-sm
+                text-white
+                outline-none
+                placeholder:text-gray-500
+                focus:border-blue-400
+                disabled:opacity-50
+              "
+            />
 
-            <div className="flex items-center gap-2">
-
-              <input
-                type="text"
-                value={message}
-                onChange={(event) =>
-                  setMessage(event.target.value)
-                }
-                onKeyDown={handleKeyDown}
-                placeholder="Ask Anakha AI..."
-                className="
-                  flex-1
-                  rounded-xl
-                  border
-                  border-blue-400/20
-                  bg-white/5
-                  px-4
-                  py-3
-                  text-sm
-                  text-white
-                  outline-none
-                  transition
-                  placeholder:text-gray-500
-                  focus:border-purple-400
-                  focus:shadow-[0_0_15px_rgba(139,92,246,0.2)]
-                "
-              />
-
-              <button
-                type="button"
-                onClick={() => sendMessage()}
-                disabled={!message.trim() || isTyping}
-                className="
-                  flex
-                  h-11
-                  w-11
-                  shrink-0
-                  items-center
-                  justify-center
-                  rounded-xl
-                  bg-gradient-to-br
-                  from-blue-500
-                  to-purple-600
-                  text-white
-                  shadow-[0_0_20px_rgba(59,130,246,0.3)]
-                  transition-all
-                  duration-300
-                  hover:scale-105
-                  hover:shadow-[0_0_28px_rgba(139,92,246,0.6)]
-                  disabled:cursor-not-allowed
-                  disabled:opacity-40
-                "
-              >
+            <button
+              type="button"
+              onClick={() => sendMessage()}
+              disabled={!message.trim() || isLoading}
+              className="
+                flex
+                items-center
+                justify-center
+                rounded-xl
+                bg-blue-600
+                px-4
+                text-white
+                transition-all
+                hover:bg-blue-500
+                hover:scale-105
+                disabled:cursor-not-allowed
+                disabled:opacity-50
+                disabled:hover:scale-100
+              "
+            >
+              {isLoading ? (
+                <Loader2
+                  size={19}
+                  className="animate-spin"
+                />
+              ) : (
                 <Send size={19} />
-              </button>
-
-            </div>
-
-            <p className="mt-2 text-center text-[10px] text-gray-500">
-              ✨ Anakha AI • Built with passion 💙
-            </p>
+              )}
+            </button>
 
           </div>
 
         </div>
       )}
 
-      {/* Floating Button */}
-
+      {/* Floating AI Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="
           group
-          relative
           flex
           items-center
           gap-3
-          overflow-hidden
           rounded-full
           border
-          border-blue-300/40
+          border-blue-400/30
           bg-gradient-to-r
           from-blue-600
-          via-indigo-600
           to-purple-600
           px-5
           py-3
           font-semibold
           text-white
-          shadow-[0_0_30px_rgba(59,130,246,0.4)]
+          shadow-[0_0_30px_rgba(59,130,246,0.35)]
           transition-all
           duration-300
           hover:scale-105
-          hover:shadow-[0_0_45px_rgba(139,92,246,0.7)]
+          hover:shadow-[0_0_45px_rgba(139,92,246,0.5)]
         "
       >
 
-        <div
-          className="
-            absolute
-            inset-0
-            -translate-x-full
-            bg-gradient-to-r
-            from-transparent
-            via-white/20
-            to-transparent
-            transition-transform
-            duration-700
-            group-hover:translate-x-full
-          "
-        />
-
-        <div
-          className="
-            relative
-            h-8
-            w-8
-            overflow-hidden
-            rounded-full
-            border
-            border-white/50
-          "
-        >
-
+        {/* Cute Character */}
+        <div className="
+          h-9
+          w-9
+          overflow-hidden
+          rounded-full
+          transition-transform
+          duration-300
+          group-hover:scale-110
+        ">
           <img
             src="/hero-character.png"
-            alt="Anakha AI"
-            className="
-              h-full
-              w-full
-              object-cover
-              transition
-              duration-300
-              group-hover:scale-110
-            "
+            alt="Ask Anakha AI"
+            className="h-full w-full object-cover"
           />
-
-          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border border-blue-700 bg-green-400" />
-
         </div>
 
-        <span className="relative hidden sm:block">
+        <span className="hidden sm:block">
           Ask Anakha AI
         </span>
 
         <MessageCircle
-          size={19}
-          className="relative transition-transform group-hover:rotate-12"
-        />
-
-        <Sparkles
-          size={14}
-          className="absolute right-1 top-1 animate-pulse text-yellow-200"
+          size={20}
+          className="transition-transform group-hover:rotate-12"
         />
 
       </button>
